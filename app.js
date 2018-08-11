@@ -9,6 +9,7 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended:false }));
 
+require('./server/routes')(app)
 
 //Default case for pages not routed
 app.get('*', (req,res) => {res.status(404).send({

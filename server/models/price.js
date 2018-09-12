@@ -1,19 +1,24 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Price = sequelize.define('Price', {
+  var Price = sequelize.define('Price', {
     date: {
       type:DataTypes.DATE,
-      primaryKey: true,
+      primaryKey:true
     },
-    symbol: DataTypes.STRING,
-    open: DataTypes.FLOAT,
-    high: DataTypes.FLOAT,
-    low: DataTypes.FLOAT,
-    close: DataTypes.FLOAT,
+    symbol:{
+      type:DataTypes.STRING,
+      primaryKey:true
+    },
+    changePercent: DataTypes.DECIMAL(20,4),
+    close: DataTypes.DECIMAL(20,4),
+    high: DataTypes.DECIMAL(20,4),
+    label: DataTypes.STRING,
+    low: DataTypes.DECIMAL(20,4),
+    open: DataTypes.DECIMAL(20,4),
+    unadjustedVolume: DataTypes.INTEGER,
     volume: DataTypes.INTEGER,
+    vwap: DataTypes.DECIMAL(20,4)
   }, {});
-  Price.removeAttribute('createdAt');
-  Price.removeAttribute('updatedAt');
   Price.associate = function(models) {
     // associations can be defined here
   };

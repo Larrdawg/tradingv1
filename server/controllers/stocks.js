@@ -1,5 +1,4 @@
 const Stock = require('../models').Stock;
-const Price = require('../models').Price;
 const sequelize = require('sequelize')
 const Op = sequelize.Op;
 
@@ -18,11 +17,20 @@ module.exports = {
         }).then(stocks => res.status(200).send(stocks));
     },
     listAll(req,res){
-        return Stock.findAll().then(stocks => res.status(200).send(stocks));
+        return Stock.findAll({attributes:['symbol']}).then(stocks => res.status(200).send(stocks));
     },
-    listPrice(req,res){
-        return Price.find({
-
-        })
+    listTop(top){
+        return new Promise((resolve,reject) => {
+            Stock.findAll({
+                attributes:['symbol'],
+                order:[['mcap','desc']],
+                where:{
+                    mcap:{
+                        [Op.ne]: null
+                    }
+                },
+                limit:top, raw:true
+            }).then(res => resolve(res.map(res => res.symbol)));
+        });
     }
 }
